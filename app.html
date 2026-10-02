@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LobbyFX</title>
+  <link rel="stylesheet" href="ui.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="shell">
+  <!-- SIDEBAR -->
+  <aside class="side">
+    <div class="brand">
+      <img class="logo-img" src="icons/logo64.png" alt="" width="28" height="28">
+      <div><b>LobbyFX</b><small data-i18n="tagline">фони та теми для FACEIT</small></div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Menu">
+      <button data-tab="library" class="on"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z M4 15l4-4 4 4 3-3 5 5"/></svg><span data-i18n="nav.library">Бібліотека</span></button>
+      <button data-tab="workshop"><svg viewBox="0 0 24 24"><path d="M3 9l9-5 9 5-9 5-9-5z M3 9v6l9 5 9-5V9"/></svg><span data-i18n="nav.workshop">Майстерня</span></button>
+      <button data-tab="themes"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.6-.8 1.6-1.6 0-.9-.6-1.3-.6-2.1 0-.8.7-1.4 1.5-1.4H17a4 4 0 0 0 4-4c0-4.9-4-8.9-9-8.9z M7.5 11h.01 M10 7.5h.01 M14.5 7.5h.01"/></svg><span data-i18n="nav.themes">Теми</span></button>
+      <button data-tab="ui"><svg viewBox="0 0 24 24"><path d="M4 6h10 M18 6h2 M4 12h4 M12 12h8 M4 18h12 M20 18h0 M14 4v4 M8 10v4 M16 16v4"/></svg><span data-i18n="nav.ui">Інтерфейс</span></button>
+      <button data-tab="sounds"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5z M16 9a4 4 0 0 1 0 6 M19 6a8 8 0 0 1 0 12"/></svg><span data-i18n="nav.sounds">Матч</span></button>
+      <button data-tab="settings"><svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span data-i18n="nav.settings">Налаштування</span></button>
+    </nav>
+    <div class="side-foot">
+      <label class="lang"><span data-i18n="lang">Мова</span>
+        <select id="lang">
+          <option value="uk">Українська</option>
+          <option value="en">English</option>
+          <option value="ru">Русский</option>
+        </select>
+      </label>
+      <button class="btn block" id="openFaceit" type="button" data-i18n="openFaceit">Відкрити FACEIT</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- current background bar -->
+    <header class="current">
+      <div class="cur-thumb" id="curThumb"></div>
+      <div class="cur-text">
+        <small data-i18n="current">Основний фон</small>
+        <b id="curLabel">—</b>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="enabled">
+        <span class="track"><span class="thumb"></span></span>
+        <span data-i18n="enabled">Фон увімкнено</span>
+      </label>
+    </header>
+
+    <!-- LIBRARY -->
+    <section class="tab" id="tab-library">
+      <div class="cols">
+        <div class="col-main">
+          <div class="card add">
+            <h2 data-i18n="lib.add">Додати фон</h2>
+            <form class="url-row" id="urlForm">
+              <input id="url" type="url" data-i18n-ph="lib.urlPh" placeholder="YouTube, Tenor, Giphy, .gif, .mp4…" autocomplete="off">
+              <button class="btn primary" type="submit" id="urlBtn" data-i18n="apply">Застосувати</button>
+            </form>
+            <button class="drop" id="drop" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+              <span><b data-i18n="lib.pick">Вибрати файл</b> <span data-i18n="lib.pickHint">або перетягни сюди · GIF, PNG, JPG, WEBP, MP4, WEBM до 60 МБ</span></span>
+            </button>
+            <input type="file" id="file" accept=".gif,.png,.jpg,.jpeg,.webp,.avif,.mp4,.webm" multiple hidden>
+          </div>
+
+          <div class="toolbar">
+            <input class="search" id="libSearch" type="search" data-i18n-ph="search" placeholder="Пошук…">
+            <div class="chips" id="libFilter">
+              <button data-f="all" class="on" data-i18n="f.all">Усі</button>
+              <button data-f="fav" data-i18n="f.fav">Улюблені</button>
+              <button data-f="file" data-i18n="f.files">Файли</button>
+              <button data-f="url" data-i18n="f.links">Посилання</button>
+              <button data-f="workshop" data-i18n="f.workshop">З Майстерні</button>
+            </div>
+          </div>
+          <div class="grid" id="libGrid"></div>
+          <div class="empty" id="libEmpty" hidden>
+            <b data-i18n="lib.empty">Бібліотека порожня</b>
+            <span data-i18n="lib.emptyHint">Додай свій фон вище або вибери готовий у Майстерні.</span>
+            <button class="btn" type="button" data-goto="workshop" data-i18n="lib.toWorkshop">Відкрити Майстерню</button>
+          </div>
+        </div>
+
+        <div class="col-side">
+          <div class="card">
+            <h2 data-i18n="look">Вигляд</h2>
+            <div class="field">
+              <div class="field-head"><label for="dim" data-i18n="dim">Затемнення</label><output id="dimOut"></output></div>
+              <input type="range" id="dim" min="0" max="90" step="5">
+            </div>
+            <div class="field">
+              <div class="field-head"><label for="blur" data-i18n="blur">Розмиття</label><output id="blurOut"></output></div>
+              <input type="range" id="blur" min="0" max="20" step="1">
+            </div>
+          </div>
+
+          <div class="card">
+            <h2 data-i18n="pages.title">Фони для сторінок</h2>
+            <label class="pages-all"><span data-i18n="pages.all">Усі сторінки одразу</span><select id="pagesAll"></select></label>
+            <div class="pages" id="pages"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <h2 data-i18n="rot.title">Ротація фонів</h2>
+              <label class="switch small"><input type="checkbox" id="rotOn"><span class="track"><span class="thumb"></span></span></label>
+            </div>
+            <div class="rot" id="rotBox">
+              <label><span data-i18n="rot.when">Коли міняти</span>
+                <select id="rotMode">
+                  <option value="visit" data-i18n="rot.visit">При кожному вході в лобі</option>
+                  <option value="interval" data-i18n="rot.interval">Кожні N хвилин</option>
+                </select>
+              </label>
+              <label id="rotMinWrap"><span data-i18n="rot.seconds">Секунд</span><input type="number" id="rotMin" min="3" max="3600" step="1"></label>
+              <div class="field">
+                <div class="field-head"><label for="rotFade" data-i18n="rot.fade">Плавний перехід</label><output id="rotFadeOut"></output></div>
+                <input type="range" id="rotFade" min="0" max="3" step="0.25">
+              </div>
+              <label><span data-i18n="rot.pool">З яких фонів</span>
+                <select id="rotPool">
+                  <option value="fav" data-i18n="rot.fav">Улюблені</option>
+                  <option value="all" data-i18n="rot.all">Уся бібліотека</option>
+                </select>
+              </label>
+              <p class="hint" data-i18n="rot.hint">Ротація працює для сторінок, де вибрано «Основний фон».</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKSHOP -->
+    <section class="tab" id="tab-workshop" hidden>
+      <div class="ws-head">
+        <div>
+          <h1 data-i18n="ws.title">Майстерня</h1>
+          <p class="muted" data-i18n="ws.sub">Готові фони від LobbyFX. Додай у бібліотеку одним кліком.</p>
+        </div>
+        <input class="search" id="wsSearch" type="search" data-i18n-ph="search" placeholder="Пошук…">
+      </div>
+      <div class="chips" id="wsTags"></div>
+      <div class="grid" id="wsGrid"></div>
+      <p class="hint" id="wsNote" hidden></p>
+    </section>
+
+    <!-- THEMES -->
+    <section class="tab" id="tab-themes" hidden>
+      <h1 data-i18n="th.title">Теми</h1>
+      <p class="muted" data-i18n="th.sub">Тема змінює весь інтерфейс FACEIT: кнопки, панелі, кольори, шрифти. Працює разом із фоном.</p>
+      <div class="themes" id="themeGrid"></div>
+    </section>
+
+    <!-- INTERFACE -->
+    <section class="tab" id="tab-ui" hidden>
+      <h1 data-i18n="ui.title">Інтерфейс</h1>
+      <p class="muted" data-i18n="ui.sub">Дрібні зміни FACEIT, які працюють з будь-якою темою.</p>
+      <div class="cols">
+        <div class="col-main">
+          <div class="card">
+            <div class="card-head"><h2 data-i18n="ui.accent">Колір акценту</h2><button class="btn small" id="accReset" type="button" data-i18n="ui.reset">Скинути</button></div>
+            <p class="hint" data-i18n="ui.accentHint">Кнопка «Пошук матчу», смуга ELO та виділення. Перекриває колір теми.</p>
+            <div class="accents" id="accents"></div>
+          </div>
+          <div class="card">
+            <h2 data-i18n="ui.play">Текст кнопки пошуку</h2>
+            <p class="hint" data-i18n="ui.playHint">Замість «Пошук матчу». Під час пошуку FACEIT показує свій текст.</p>
+            <div class="url-row"><input type="search" id="playText" maxlength="40" data-i18n-ph="ui.playPh" placeholder="Напр. ПОГНАЛИ"><button class="btn primary" id="playSave" type="button" data-i18n="ui.save">Зберегти</button></div>
+          </div>
+        </div>
+        <div class="col-side">
+          <div class="card">
+            <h2 data-i18n="ui.hide">Сховати</h2>
+            <div class="toggles" id="hideList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUNDS -->
+    <section class="tab" id="tab-sounds" hidden>
+      <div class="ws-head">
+        <div>
+          <h1 data-i18n="snd.title">Звук знаходження матчу</h1>
+          <p class="muted" data-i18n="snd.sub">Заміни стандартний звук FACEIT на свій.</p>
+        </div>
+        <label class="switch"><input type="checkbox" id="sndOn"><span class="track"><span class="thumb"></span></span><span data-i18n="on">Увімкнено</span></label>
+      </div>
+      <div class="cols">
+        <div class="col-main">
+          <div class="card">
+            <h2 data-i18n="snd.pick">Твій звук</h2>
+            <div class="sound-list" id="soundList"></div>
+            <div class="sound-add">
+              <button class="btn" id="sndFileBtn" type="button" data-i18n="snd.addFile">Додати свій файл</button>
+              <span class="hint" data-i18n="snd.fileHint">MP3, OGG, WAV до 5 МБ</span>
+              <input type="file" id="sndFile" accept=".mp3,.ogg,.wav,.m4a" hidden>
+            </div>
+            <form class="url-row" id="sndUrlForm">
+              <input type="url" id="sndUrl" data-i18n-ph="snd.urlPh" placeholder="Посилання на звук або myinstants.com" autocomplete="off">
+              <button class="btn" id="sndUrlBtn" type="submit" data-i18n="snd.addUrl">Додати</button>
+            </form>
+            <div class="field">
+              <div class="field-head"><label for="vol" data-i18n="snd.volume">Гучність</label><output id="volOut"></output></div>
+              <input type="range" id="vol" min="0" max="100" step="5">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h2 data-i18n="aa.title">Автоприйом матчу</h2>
+              <label class="switch"><input type="checkbox" id="aaOn"><span class="track"><span class="thumb"></span></span></label></div>
+            <p class="hint" data-i18n="aa.hint">Натискає «Прийняти», коли матч знайдено. Працює лише коли вкладка FACEIT відкрита.</p>
+            <div class="grid2">
+              <label class="field"><div class="field-head"><span data-i18n="aa.delay">Затримка, с</span></div>
+                <div class="url-row"><input type="number" id="aaMin" min="0" max="15" step="0.5"><input type="number" id="aaMax" min="0" max="15" step="0.5"></div></label>
+              <label class="field"><div class="field-head"><span data-i18n="aa.idle">Лише якщо я був за ПК, хв</span></div>
+                <input type="number" id="aaIdle" min="0" max="60" step="1"></label>
+            </div>
+            <p class="hint" data-i18n="aa.idleHint">0 — приймати завжди. Інакше не прийме, якщо ти не торкався миші й клавіатури довше.</p>
+            <label class="switch"><input type="checkbox" id="aaNotify"><span class="track"><span class="thumb"></span></span><span data-i18n="aa.notify">Сповіщення</span></label>
+            <div class="log" id="aaLog"></div>
+          </div>
+        </div>
+        <div class="col-side">
+          <div class="card">
+            <h2 data-i18n="snd.which">Який звук замінювати</h2>
+            <p class="trigger" id="trigger"></p>
+            <ol class="steps">
+              <li data-i18n="snd.step1">Відкрий FACEIT і знайди матч один раз.</li>
+              <li data-i18n="snd.step2">Звук, який зіграв FACEIT, з'явиться нижче.</li>
+              <li data-i18n="snd.step3">Натисни «Це звук матчу» біля нього.</li>
+            </ol>
+            <div class="log" id="sndLog"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="tab" id="tab-settings" hidden>
+      <h1 data-i18n="set.title">Налаштування</h1>
+      <div class="cols">
+        <div class="col-main">
+          <div class="card">
+            <h2 data-i18n="set.backup">Резервна копія</h2>
+            <p class="muted" data-i18n="set.backupHint">Збережи бібліотеку, звуки й налаштування у файл, щоб перенести на інший комп'ютер.</p>
+            <div class="row">
+              <button class="btn primary" id="exportBtn" type="button" data-i18n="set.export">Експортувати</button>
+              <button class="btn" id="importBtn" type="button" data-i18n="set.import">Імпортувати</button>
+              <input type="file" id="importFile" accept=".json,application/json" hidden>
+            </div>
+          </div>
+          <div class="card danger">
+            <h2 data-i18n="set.reset">Скинути все</h2>
+            <p class="muted" data-i18n="set.resetHint">Видалить бібліотеку, свої звуки й налаштування. Цю дію не можна скасувати.</p>
+            <div class="row">
+              <button class="btn" id="resetBtn" type="button" data-i18n="set.resetBtn">Скинути</button>
+              <button class="btn bad" id="resetConfirm" type="button" hidden data-i18n="set.resetConfirm">Так, видалити все</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-side">
+          <div class="card">
+            <h2 data-i18n="set.about">Про LobbyFX</h2>
+            <p class="muted" data-i18n="set.aboutText">Неофіційне розширення, не пов'язане з FACEIT. Працює лише на faceit.com і нікуди не надсилає твої дані.</p>
+            <p class="muted" id="version"></p>
+            <a class="btn small" href="legal.html" target="_blank" data-i18n="set.legal">Правила та конфіденційність</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <title>LobbyFX</title>
+  <link rel="stylesheet" href="ui.css">
+  <style>
+    body { width: 360px; }
+    .pop { padding: 14px; display: flex; flex-direction: column; gap: 12px; background: var(--panel); }
+    .top { display: flex; align-items: center; gap: 10px; }
+    .top b { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; }
+    .status { margin: 1px 0 0; display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; }
+    .status i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); flex: none; }
+    .status[data-s="on"] i { background: var(--ok); }
+    .status[data-s="idle"] i { background: var(--warn); }
+    .hero { position: relative; aspect-ratio: 16/9; border-radius: 3px; overflow: hidden; background: #060606; }
+    .hero > img, .hero > video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero .dim { position: absolute; inset: 0; background: #000; }
+    .hero .empty { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; color: var(--muted); font-size: 12.5px; padding: 12px; }
+    .hero.off > img, .hero.off > video, .hero.off .dim { opacity: .25; }
+    .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+    .favs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .fav { aspect-ratio: 16/9; border-radius: 2px; overflow: hidden; border: 1px solid var(--line); padding: 0; background: #060606; cursor: pointer; }
+    .fav.on { border-color: #ededee; }
+    .fav > img, .fav > video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    select { width: 100%; }
+    .foot { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .foot .btn { white-space: normal; padding: 8px 8px; font-size: 13px; }
+    body { overflow-x: hidden; }
+  </style>
+</head>
+<body>
+  <main class="pop">
+    <div class="top">
+      <img class="logo-img" src="icons/logo64.png" alt="" width="28" height="28">
+      <div>
+        <b>LobbyFX</b>
+        <p class="status" id="status"><i></i><span></span></p>
+      </div>
+    </div>
+
+    <div class="hero" id="hero"><div class="dim" id="heroDim"></div></div>
+    <div class="row">
+      <span class="label" id="label">—</span>
+      <label class="switch"><input type="checkbox" id="enabled"><span class="track"><span class="thumb"></span></span></label>
+    </div>
+
+    <div class="field">
+      <div class="field-head"><label for="dim" data-i18n="dim">Затемнення</label><output id="dimOut"></output></div>
+      <input type="range" id="dim" min="0" max="90" step="5">
+    </div>
+
+    <div>
+      <h2 data-i18n="pop.favs">Улюблені</h2>
+      <div class="favs" id="favs"></div>
+      <p class="hint" id="noFavs" data-i18n="pop.noFavs" hidden></p>
+    </div>
+
+    <label class="field">
+      <div class="field-head"><span data-i18n="pop.theme">Тема</span></div>
+      <select id="theme"></select>
+    </label>
+
+    <div class="foot">
+      <button class="btn primary" id="openApp" type="button" data-i18n="pop.open">Відкрити LobbyFX</button>
+      <button class="btn" id="openFaceit" type="button" data-i18n="openFaceit">Відкрити FACEIT</button>
+    </div>
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
